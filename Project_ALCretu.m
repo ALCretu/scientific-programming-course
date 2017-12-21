@@ -1,9 +1,10 @@
-%% 15/12/2017 Andreea Loredana Cretu with inspiration from http://peterscarfe.com/fadingtexturedemo.html :)
+%% Project started on 15/12/2017 by Andreea Loredana Cretu with inspiration from http://peterscarfe.com/fadingtexturedemo.html :)
 %%% Individual Project for Scientific programming course %%%
 %%% Participants have to observe two types of blurred grasping picture stimuli preceded by
-%%% colored cues and to decide which grasp type is being showed
+%%% colored cues and to decide which grasp type is being showed ->> 2 AFC task
 
-%%% YOU CAN EXIT THE EXPERIMENT AT ANY TIME BY PRESSING 'ESC'
+%%% Just press run and follow the instructions presented in the Command window or on the screen %%%
+%%% YOU CAN EXIT THE EXPERIMENT AT ANY TIME BY PRESSING 'ESC' %%%
 sca;
 clc
 
@@ -380,11 +381,11 @@ if analysis==1
     my_cols = [0 0.4980 0; 1 1 0; 1 0 0]; %% specific colors for each part of the pie chart
     data_plot = [Performance.CorrectResp,Performance.MissedResp, Performance.ErrorResp]; %% data for plotting
     subplot(2,3,1);pie_modified(data_plot,my_cols);  title('% of Trials'); legend({'Correct','Missed','Error'},'Location','southoutside','Orientation','horizontal')
-    subplot(2,3,2); boxplot(RT(Response_option==1)); title('All correct trials');ylim([0 3])
-    subplot(2,3,3); boxplot(RT(Response_option==2)); title('All error trials');ylim([0 3])
-    subplot(2,3,4); boxplot(RT(Picture_option==1 | Picture_option==2)); title('Cued correct trials');ylim([0 3])
-    subplot(2,3,5); boxplot(RT(Picture_option==3 | Picture_option==4)); title('Cued error trials');ylim([0 3])
-    subplot(2,3,6); boxplot(RT(Picture_option==5 | Response_option==6)); title('Neutral trials');ylim([0 3])
+    subplot(2,3,2); boxplot(RT(Response_option==1)); title('All correct trials');ylim([0 3]); ylabel ('Rt (s)'); set(gca,'XTickLabel',[]);
+    subplot(2,3,3); boxplot(RT(Response_option==2)); title('All error trials');ylim([0 3]); ylabel ('Rt (s)');set(gca,'XTickLabel',[]);
+    subplot(2,3,4); boxplot(RT(Picture_option==1 | Picture_option==2)); title('Cued correct trials');ylim([0 3]); ylabel('Rt (s)');set(gca,'XTickLabel',[]);
+    subplot(2,3,5); boxplot(RT(Picture_option==3 | Picture_option==4)); title('Cued error trials');ylim([0 3]); ylabel ('Rt (s)');set(gca,'XTickLabel',[]);
+    subplot(2,3,6); boxplot(RT(Picture_option==5 | Response_option==6)); title('Neutral trials');ylim([0 3]); ylabel ('Rt (s)');set(gca,'XTickLabel',[]);
 else
     disp('End of experiment. Goodbye! ');  
 end
