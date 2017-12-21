@@ -2,6 +2,8 @@
 %%% Individual Project for Scientific programming course %%%
 %%% Participants have to observe two types of blurred grasping picture stimuli preceded by
 %%% colored cues and to decide which grasp type is being showed
+
+%%% YOU CAN EXIT THE EXPERIMENT AT ANY TIME BY PRESSING 'ESC'
 sca;
 clc
 
@@ -60,11 +62,16 @@ try
     black = BlackIndex(screenNumber);  
     
     %% Open a screen window and get some info about its size and flip time
+    %Define some variables which deal with the location of the elements on the screen (to make sure that all elements are visible when we use the small window)
     if test == 1
         SmallWindow  = [0, 0, 600, 600];
         [win, windowRect] = PsychImaging('OpenWindow', screenNumber, black, SmallWindow );
+        feedback_X = 400;
+        feedback_Y = 100;
     elseif test ==2
         [win, windowRect] = PsychImaging('OpenWindow', screenNumber, black);
+        feedback_X = 600;
+        feedback_Y = 150;
     end
     % Get the size of the on screen window
     CompScreen = get(0,'ScreenSize'); % Find out the size of this computer screen
@@ -94,7 +101,7 @@ try
     blue = [15 75 256];
     colors = {white;blue;white;blue;gray;gray}; %following the order of moviename from below; with red in between: this is just because I didn't want to use conditions 1,2,3,4.. and preferred to have 1,2 = correct and 10,20=error
     centeredRect = CenterRectOnPointd([0 0 536 576], centreX, centreY);%% size of the colored cue
-    RectFeedback= CenterRectOnPointd([0 0 200 200], centreX-600, 150); %size of feedback: thumbs up/down
+    RectFeedback= CenterRectOnPointd([0 0 200 200], centreX-feedback_X, feedback_Y); %size of feedback: thumbs up/down
     
     %% Fixation cross info
     % Here we set the size of the arms of our fixation cross
@@ -145,7 +152,7 @@ try
     %% % instruction screen
     Texture_i = Screen('MakeTexture', win, instruction);
     Screen('DrawTextures', win, Texture_i, [],[], 0);
-    DrawFormattedText( win, '< Press any key to continue >','center', centreY+200, [100, 130, 150]);
+    DrawFormattedText( win, '< Press any key to continue >','center', centreY+450, [100, 130, 150]);
     Screen(win, 'Flip'); % present to the screen. This is the command to actually present whatever you have made 'win'
     WaitSecs(.5); % this avoids participants accidently pressing too quickly and moving the experiment on
     KbWait;
@@ -154,7 +161,7 @@ try
     %% % tips screen
     Texture_t = Screen('MakeTexture', win, Tips);
     Screen('DrawTextures', win, Texture_t, [],[], 0);
-    DrawFormattedText( win, '< Press any key to continue >','center', centreY+200, [100, 130, 150]);
+    DrawFormattedText( win, '< Press any key to continue >','center', centreY+450, [100, 130, 150]);
     Screen(win, 'Flip'); % present to the screen. This is the command to actually present whatever you have made 'win'
     WaitSecs(.5); % this avoids participants accidently pressing too quickly and moving the experiment on
     KbWait;
@@ -163,7 +170,7 @@ try
     %% % button press screen
     Texture_b = Screen('MakeTexture', win, ButtonPress);
     Screen('DrawTextures', win, Texture_b, [],[], 0);
-    DrawFormattedText( win, '< Press any key to continue >','center', centreY+200, [100, 130, 150]);
+    DrawFormattedText( win, '< Press any key to continue >','center', centreY+450, [100, 130, 150]);
     Screen(win, 'Flip'); % present to the screen. This is the command to actually present whatever you have made 'win'
     WaitSecs(.5); % this avoids participants accidently pressing too quickly and moving the experiment on
     KbWait;
@@ -353,7 +360,7 @@ if analysis==1
         flipResp(trial_id,1) = timestamp(find(trialNr == trial_id & trialState == 3,1)); %% we write 'trialNr == trial_id+1' because we want to start from trialNr=2 but we need index 1 for each matrix (for example, 'flipResp(trial_id,1)', cannot start at 2)
         if timestamp(find(trialNr == trial_id & trialState == 3 & answer,1))
             Given_RespTime(trial_id,1) = timestamp(find(trialNr == trial_id & trialState == 3 & answer, 1)); %value von timestamp (Zeit) wenn trialNr gleich trial_id ist und trialState gleich 5-> response und jemand dr?ckt answer?0
-            RT(trial_id,1) = Given_Resp(trial_id,1) - flipResp(trial_id,1);
+            RT(trial_id,1) = Given_RespTime(trial_id,1) - flipResp(trial_id,1);
             Response_option(trial_id,1) = answer(find(trialNr == trial_id & trialState == 3 & answer, 1));
             Picture_option(trial_id,1) = picture(find(trialNr == trial_id & trialState == 3 & answer, 1));
         else
@@ -370,7 +377,7 @@ if analysis==1
     %% Plot number of trials, RTs of error and correct trials and RTs of trials preceded by correct cue, by error cue or neutral cue
     figure;
     my_cols = [0 0.4980 0; 1 1 0; 0.8 0 0]; %% specific colors for each part of the pie chart
-    subplot(2,3,1);p = pie([Performance.CorrectResp,Performance.MissedResp, Performance.ErrorResp]);  title('Nr of Trials'); legend({'Correct','Missed','Error'},'Location','southoutside','Orientation','horizontal')
+    subplot(2,3,1);p = pie([Performance.CorrectResp,Performance.MissedResp, Performance.ErrorResp]);  title('% of Trials'); legend({'Correct','Missed','Error'},'Location','southoutside','Orientation','horizontal')
     p(1).FaceColor = my_cols(1,:);
     p(3).FaceColor = my_cols(2,:);
     p(5).FaceColor = my_cols(3,:);
