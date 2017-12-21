@@ -102,6 +102,7 @@ try
     colors = {white;blue;white;blue;gray;gray}; %following the order of moviename from below; with red in between: this is just because I didn't want to use conditions 1,2,3,4.. and preferred to have 1,2 = correct and 10,20=error
     centeredRect = CenterRectOnPointd([0 0 536 576], centreX, centreY);%% size of the colored cue
     RectFeedback= CenterRectOnPointd([0 0 200 200], centreX-feedback_X, feedback_Y); %size of feedback: thumbs up/down
+    RectFeedback= CenterRectOnPointd([0 0 200 200], centreX-600, 150); %size of feedback: thumbs up/down
     
     %% Fixation cross info
     % Here we set the size of the arms of our fixation cross
