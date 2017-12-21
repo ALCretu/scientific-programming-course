@@ -376,11 +376,9 @@ if analysis==1
     
     %% Plot number of trials, RTs of error and correct trials and RTs of trials preceded by correct cue, by error cue or neutral cue
     figure;
-    my_cols = [0 0.4980 0; 1 1 0; 0.8 0 0]; %% specific colors for each part of the pie chart
-    subplot(2,3,1);p = pie([Performance.CorrectResp,Performance.MissedResp, Performance.ErrorResp]);  title('% of Trials'); legend({'Correct','Missed','Error'},'Location','southoutside','Orientation','horizontal')
-    p(1).FaceColor = my_cols(1,:);
-    p(3).FaceColor = my_cols(2,:);
-    p(5).FaceColor = my_cols(3,:);
+    my_cols = [0 0.4980 0; 1 1 0; 1 0 0]; %% specific colors for each part of the pie chart
+    data_plot = [Performance.CorrectResp,Performance.MissedResp, Performance.ErrorResp]; %% data for plotting
+    subplot(2,3,1);pie_modified(data_plot,my_cols);  title('% of Trials'); legend({'Correct','Missed','Error'},'Location','southoutside','Orientation','horizontal')
     subplot(2,3,2); boxplot(RT(Response_option==1)); title('All correct trials');ylim([0 3])
     subplot(2,3,3); boxplot(RT(Response_option==2)); title('All error trials');ylim([0 3])
     subplot(2,3,4); boxplot(RT(Picture_option==1 | Picture_option==2)); title('Cued correct trials');ylim([0 3])
