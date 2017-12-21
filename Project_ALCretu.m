@@ -375,6 +375,7 @@ if analysis==1
     Performance.AccuracyPercentage = (Performance.CorrectResp *100)/max(trialNr);
     
     %% Plot number of trials, RTs of error and correct trials and RTs of trials preceded by correct cue, by error cue or neutral cue
+    cd(pname) %% go back to the main folder where we have the function 'pie_modified'
     figure;
     my_cols = [0 0.4980 0; 1 1 0; 1 0 0]; %% specific colors for each part of the pie chart
     data_plot = [Performance.CorrectResp,Performance.MissedResp, Performance.ErrorResp]; %% data for plotting
